@@ -33,8 +33,8 @@ async function init() {
 
     // 2. Stabilizer 초기화 (떨림 방지)
     stabilizer = new PredictionStabilizer({
-      threshold: 0.75, // 반응 속도를 위해 임계값 완화
-      smoothingFrames: 2 // 반응을 빠르게 하기 위해 프레임 수 축소 (5 -> 2)
+      threshold: 0.55, // 더 쉽게 인식되도록 기준값 대폭 완화
+      smoothingFrames: 1 // 딜레이 최소화 (즉각 반응)
     });
 
     // 3. 캔버스 설정
@@ -47,13 +47,34 @@ async function init() {
     gameEngine = new GameEngine();
     gameEngine.init(canvas); // 캔버스 연결
 
-    // 게임 콜백 설정
-    gameEngine.onScoreChange = (score, life, level) => {
-      // UI 업데이트가 필요하다면 여기에 작성 (현재는 콘솔 로그)
-      console.log(`Score: ${score}, Life: ${life}, Level: ${level}`);
+    // 게임 콜백 연결 (UI 업데이트)
+    const scoreEl = document.getElementById("score-val");
+    const lifeEl = document.getElementById("life-val");
+    const comboEl = document.getElementById("combo-val");
+    const comboContainer = document.getElementById("combo-display");
+
+    gameEngine.onScoreChange = (score, life, level, combo) => {
+      scoreEl.innerText = score.toLocaleString();
+
+      let hearts = "";
+      for (let i = 0; i < life; i++) hearts += "❤️";
+      lifeEl.innerText = hearts;
+
+      // Combo Effect
+      if (combo > 1) {
+        comboEl.innerText = combo;
+        comboContainer.style.opacity = "1";
+        comboContainer.style.transform = "translate(-50%, -50%) scale(1.5)";
+        setTimeout(() => {
+          comboContainer.style.transform = "translate(-50%, -50%) scale(1.0)";
+        }, 100);
+      } else {
+        comboContainer.style.opacity = "0";
+      }
     };
+
     gameEngine.onGameEnd = (score, level) => {
-      alert(`게임 오버! 최종 점수: ${score}`);
+      // 게임 오버 처리는 엔진 내부 draw에서 텍스트 표시
       stop();
     };
 

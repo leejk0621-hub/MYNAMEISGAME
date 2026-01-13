@@ -1,80 +1,126 @@
-/* 페이지 전체 스타일과 게임 UI 디자인 */
+/* V4: The Perfect Edition Theme */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;700&display=swap');
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-  gap: 16px;
+  background-color: #1a1a2e;
+  background-image: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  overflow: hidden;
 }
 
 h1 {
-  margin: 0;
-  font-size: 24px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 32px;
+  background: linear-gradient(to right, #00f260, #0575e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-.button-container {
+#hud-layer {
+  width: 420px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.score-box,
+.life-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+  font-size: 18px;
   display: flex;
   gap: 10px;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-button:hover {
-  background-color: #f0f0f0;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+#score-val {
+  color: #00f260;
 }
 
 .canvas-container {
   position: relative;
-  display: inline-block;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: #000;
 }
 
-#canvas {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+canvas {
   display: block;
 }
 
-#max-prediction {
+/* Combo Display - Center of Screen Pulse */
+#combo-display {
   position: absolute;
-  top: 10px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 16px;
-  font-weight: bold;
-  pointer-events: none;
-}
-
-#label-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-width: 200px;
-}
-
-#label-container div {
-  padding: 8px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
+  transform: translate(-50%, -50%);
   text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+#combo-val {
+  font-family: 'Fredoka One', cursive;
+  font-size: 60px;
+  color: #ff00cc;
+  text-shadow: 4px 4px 0px #330033;
+  display: block;
+}
+
+.combo-text {
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.button-container {
+  margin-top: 25px;
+}
+
+button {
+  background: linear-gradient(to right, #DA22FF, #9733EE);
+  border: none;
+  padding: 12px 35px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(151, 51, 238, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(151, 51, 238, 0.6);
+}
+
+button:disabled {
+  background: #444;
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+#label-container,
+#max-prediction {
+  display: none;
 }
